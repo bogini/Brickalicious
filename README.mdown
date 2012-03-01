@@ -1,0 +1,18 @@
+LEGO 3D Printer
+===============
+
+Abstract
+--------
+We will build a machine that lays down LEGO bricks in a pattern the user can specify in a LEGO CAD program. The machine will lay down the bricks using a writing head, with multiple motors used to give it a range of motion. The design of the bricks to be printed will be determined in the LEGO Digital Designer software, the output of which will be parsed by a Python script that sends the necessary data to an Arduino. 
+
+Project Description/Statement of Work
+-------------------------------------
+This project is heavy on mechanical, electrical and software components. Therefore, we plan to do as much planning and prototyping early on as possible. This means that hardware and software, our starting points, will work largely independently until we reach the stage of designing and implementing our controls and low-level coding (read: circuits and Arduino). This also means that we’ll need to develop testing techniques for each component independently.
+
+For example, consider the printer head. This is undoubtedly one of the most important components of the mechanical system, and needs to work consistently for every orientation. Because of these considerations, we’ll be prototyping early and often, and attaching sample servos to ensure that the mechanism works according to our expectations.
+
+As for software, the biggest issue to tackle will probably be designing the instructions for the 3D printer. In other words, coming up with an engine that takes an orientation of LEGO bricks and converts that orientation into a series of commands for the Arduino to send to the actuators. The best way to test for the accuracy of this “engine” will be to create code that reads the relative position of each actuator, so we can reconstruct the path of the 3D printer head and ensure that the instructions we send are accurate.
+
+The electrical subsystem is probably the least complex. We’ll be buying stepper motor driver boards, which will make interfacing with the stepper motors far less complicated. Otherwise, we’ll be using an Arduino to communicate with the stepper motor drivers and servos. In addition, we’ll use limit switches at the LEGO pick up location that reset the head’s position every time it picks up a new LEGO to ensure that the mechanical system is calibrated at all times. We’re also looking into using strain gauges as collision fail-safes: that way, the printer head doesn’t get damaged if there’s a mechanical error. 
+
+As for the pacing of the project, we plan to adopt some of the principles from Agile Development. We’ll be working in 2 week sprints, with the first sprint ending 3/9. We’ve decided to use Agile because of the scope of this project. Since it’s so ambitious, if one of our systems doesn’t work by design, we’ll have time to pivot and redesign it.
