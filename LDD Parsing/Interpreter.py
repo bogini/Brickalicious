@@ -25,7 +25,7 @@ class Brick:
         return true
 
 def main():
-    infilename = "test.LXFML"
+    infilename = "Lego_test.LXFML"
 
     lines = []
     if infilename != "" and os.path.isfile(infilename):
@@ -49,34 +49,45 @@ def main():
         if regexp:
             regexp = regexp.group(0)
             designID = regexp.replace('designID=','').replace('"','')
-            print designID
             
         # Transformation
         regexp = re.search('transformation=".*"', element)
         if regexp:
             regexp = regexp.group(0)
             transformation = regexp.replace('transformation=','').replace('"','')
+            
+            transformation_array = transformation.split(',')
+            orientation = []
+            for i in range(9):
+                orientation.append(int(round(float(transformation_array[i]), 1)))
+            
+            position = []
+            for i in range(3):
+                position.append(round(float(transformation_array[-(i+1)]), 2))
+            
             # Orientation
-            if transformation.startswith('-1,0,0,0,1,0,0,0,-1'):
-                orientation = 'S'
-            elif transformation.startswith('1,0,0,0,1,0,0,0,1'):
+            if orientation == [-1,0,0,0,1,0,0,0,-1]:
+                position[2] -= 2.4  # x
+                position[0] += 0.8  # y
+                orientation = ''
+            elif orientation == [1,0,0,0,1,0,0,0,1]:
                 orientation = 'N'
-            elif transformation.startswith('0,0,-1,0,1,0,1,0,'):
+            elif orientation == [0,0,-1,0,1,0,1,0,0]:
                 orientation = 'E'
-            elif transformation.startswith('0,0,1,0,-1,0,-1,0,'):
-                orientation = 'W'
-            print orientation
+            elif orientation == [0,0,1,0,1,0,-1,0,0]:
+                position[2] += 0.8  # x
+                position[0] += 2.4  # y
+                orientation = 'E'
+                
             # Coordinates
-            transformationItems = transformation.split(',')
-            x = float(transformationItems[-3])
-            z = float(transformationItems[-2])
-            y = float(transformationItems[-1])
-            print x, y, z
+            x = position[2]
+            y = position[0]
+            z = position[1]
+            
+            print designID +  ':', orientation, '@', x, y, z
         
         # Add the brick to the list
         bricks.append(Brick(x, y, z, orientation, designID))
-    
-    
     
 if __name__ == "__main__":
     main()
