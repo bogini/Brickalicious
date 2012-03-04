@@ -57,10 +57,14 @@ def main():
             regexp = regexp.group(0)
             transformation = regexp.replace('transformation=','').replace('"','')
             # Orientation
-            if transformation.startswith('-1,0,0,0,1,0,0,0,-1') | transformation.startswith('1,0,0,0,1,0,0,0,1'):
-                orientation = 'NS'
-            elif transformation.startswith('0,0,-1,0,1,0,1,0,') | transformation.startswith('0,0,1,0,-1,0,-1,0,'):
-                orientation = 'EW'
+            if transformation.startswith('-1,0,0,0,1,0,0,0,-1'):
+                orientation = 'S'
+            elif transformation.startswith('1,0,0,0,1,0,0,0,1'):
+                orientation = 'N'
+            elif transformation.startswith('0,0,-1,0,1,0,1,0,'):
+                orientation = 'E'
+            elif transformation.startswith('0,0,1,0,-1,0,-1,0,'):
+                orientation = 'W'
             print orientation
             # Coordinates
             transformationItems = transformation.split(',')
