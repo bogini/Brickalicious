@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<LXFML versionMajor="5" versionMinor="0" name="test">
+  <Meta>
+    <Application name="LEGO Digital Designer" versionMajor="4" versionMinor="2"/>
+    <Brand name="LDD"/>
+    <BrickSet version="604.1"/>
+  </Meta>
+  <Cameras>
+    <Camera refID="1" fieldOfView="80" distance="92.130279541015625" transformation="0.3030349910259246826171875,0,-0.952979564666748046875,-0.5501995086669921875,0.816499292850494384765625,-0.17495624721050262451171875,0.778106987476348876953125,0.577346622943878173828125,0.2474277913570404052734375,71.9932708740234375,53.384639739990234375,22.4068813323974609375"/>
+  </Cameras>
+  <Bricks cameraRef="1">
+    <Brick refID="0" designID="3001" itemNos="300124">
+      <Part refID="0" designID="3001" materials="24">
+        <Bone refID="1" transformation="1,0,0,0,1,0,0,0,1,-1.19999980926513671875,0,0.3999996185302734375">
+        </Bone>
+      </Part>
+    </Brick>
+  </Bricks>
+  <RigidSystems>
+    <RigidSystem>
+      <Rigid refID="1" transformation="1,0,0,0,1,0,0,0,1,-1.19999980926513671875,0,0.3999996185302734375" boneRefs="1"/>
+    </RigidSystem>
+  </RigidSystems>
+  <GroupSystems>
+    <GroupSystem>
+    </GroupSystem>
+  </GroupSystems>
+  <BuildingInstructions>
+  </BuildingInstructions>
+</LXFML>
