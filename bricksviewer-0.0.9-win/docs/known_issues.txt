@@ -1,0 +1,42 @@
+bricksviewer 0.0.9:
+--------------
+  -  Started using sourceforge to track bugs instead of maintaining known issues
+     file
+
+
+bricksviewer 0.0.7:
+--------------
+  -  Errors dump information to console instead of popping up dialogs
+
+  -  Camera numbers loaded from LXFML are not interpolated exactly correctly
+
+
+bricksviewer 0.0.5:
+--------------
+  -  Errors dump information to console instead of popping up dialogs
+  
+  -  Many errors not trapped
+  
+  -  Top of studs need normals adjusted to be <0,1,0>
+
+
+bricksviewer 0.0.3:
+--------------
+  -  Errors dump information to console instead of popping up dialogs
+  
+  -  Many errors not trapped
+  
+
+bricksviewer 0.0.1:
+--------------
+  -  Errors dump information to console instead of popping up dialogs
+  
+  -  Many errors not trapped
+  
+  -  All bricks render as 1x1 bricks
+  
+  -  Rotation may be overly sensitive
+  
+  -  Light is at fixed position instead of rotating with view
+  
+  -  Swing components seem to have trouble rendering on Linux

@@ -1,0 +1,45 @@
+DOCUMENTATION FILES
+===================
+
+/LICENSE.TXT
+The BSD license for bricksviewer
+
+/README.TXT
+The bare essentials for running a binary distribution
+
+/docs/developer_readme.txt
+The bare essentials for building/running a source distribution
+
+/docs/known_issues.txt
+Per release notes on outstanding work most likely to be categorized as "bugs"
+
+/docs/overview.txt
+This file
+
+/docs/license/*.txt
+The licenses for included libraries
+
+/docs/release_notes.txt
+Per release notes on changes
+
+/docs/todo.txt
+Per release notes on outstanding work most likely to be categorized as "features"
+
+
+VERSIONING
+==========
+
+major.minor.sub
+even numbers are stable, odd numbers are experimental
+
+
+CODE STYLE
+==========
+
+Should follow the Sun guidelines with two deviations allowed:
+
+getters/setters may be oneliners:
+public void setFoo(int val) { foo = val; }
+
+when a null value will result in no work in a function, a one line return is permitted:
+if (foo == null) return;
