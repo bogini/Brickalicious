@@ -6,32 +6,33 @@ import unicodedata
 from xml.dom.minidom import parseString
 
 class Pin:
-	def __init__(self, x, y, z):
-		self.x = x
-		self.y = y
-		self.z = z
-		
-	def __str__(self):
-		return "Pin @ (" + str(self.x) + ", " + str(self.y) + ", " + str(self.z) + ")"
+    def __init__(self, x, y, z):
+        self.x = x
+        self.y = y
+        self.z = z
+        
+    def __str__(self):
+        return "Pin @ (" + str(self.x) + ", " + str(self.y) + ", " + str(self.z) + ")"
+        
 class Brick:
     def __init__(self, x, y, z, orientation, designID):
         self.orientation = orientation
         if abs(x) == 0.4:
-			pin_x = 1*x/.4
+            pin_x = 1*x/.4
         else:
-			pin_x = (x-.4)/.8
-			
+            pin_x = (x+.4)/.8
+            
         if abs(y) == 0.4:
-			pin_y = 1*y/.4
+            pin_y = 1*y/.4
         else:
-			pin_y = (y-.4)/.8
-			
+            pin_y = (y-.4)/.8
+            
         self.pin = Pin(pin_x, pin_y, z/.96)
         self.designID = designID
         self.covering()
         
     def __str__(self):
-		return "Brick- DesignID: " + str(self.designID) + "Orientation: " + str(self.orientation) +  " Origin " + self.pin.__str__()
+        return "Brick (" + str(self.designID) + "): " + str(self.orientation) + ", Origin: " + self.pin.__str__()
     
     def valid(self):
         # Determines if a brick is valid or not
@@ -47,13 +48,15 @@ class Brick:
      
     def covering(self):
         self.covers = []
-        if self.orientation == 'E':
+        if self.orientation == 'N':
             for i in range(4):
                 for j in range(2):
-                    self.covers.append(Pin(self.pin.x + i, self.pin.y + j, self.pin.z))
-					 
-			 
-
+                    self.covers.append(Pin(self.pin.x + i, self.pin.y - j, self.pin.z))
+        elif self.orientation == 'E':
+            for i in range(2):
+                for j in range(4):
+                    self.covers.append(Pin(self.pin.x + i, self.pin.y - j, self.pin.z))
+            
 def main():
     infilename = "Lego_test.LXFML"
 
@@ -113,17 +116,15 @@ def main():
             x = position[2]
             y = position[0]
             z = position[1]
-            
-            print designID +  ':', orientation, '@', x, y, z
-        
+                    
         # Add the brick to the list
         bricks.append(Brick(x, y, z, orientation, designID))
         
         #test
         for brick in bricks:
-			print brick
-			print brick.covers
+            print brick
+            for pin in brick.covers:
+                print pin
         
-    
 if __name__ == "__main__":
     main()
