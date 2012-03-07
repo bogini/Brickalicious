@@ -6,19 +6,37 @@
     <BrickSet version="604.1"/>
   </Meta>
   <Cameras>
-    <Camera refID="1" fieldOfView="80" distance="69.28203582763671875" transformation="0.707106888294219970703125,0,-0.707106888294219970703125,-0.4082482755184173583984375,0.816496551036834716796875,-0.4082482755184173583984375,0.577350437641143798828125,0.577350199222564697265625,0.577350437641143798828125,40,39.999996185302734375,40"/>
+    <Camera refID="1" fieldOfView="80" distance="69.28208160400390625" transformation="0.707106769084930419921875,0,-0.707106769084930419921875,-0.707106769084930419921875,0.000289636489469558000564575195312,-0.707106769084930419921875,0,1,0,0.014189243316650390625,69.282073974609375,0.014189243316650390625"/>
   </Cameras>
   <Bricks cameraRef="1">
     <Brick refID="0" designID="3001" itemNos="300124">
       <Part refID="0" designID="3001" materials="24">
-        <Bone refID="1" transformation="1,0,0,0,1,0,0,0,1,-2.7999999523162841796875,0,-0.4000000059604644775390625">
+        <Bone refID="1" transformation="1,0,0,0,1,0,0,0,1,0.4000000059604644775390625,0,-0.4000000059604644775390625">
+        </Bone>
+      </Part>
+    </Brick>
+    <Brick refID="1" designID="3001" itemNos="300124">
+      <Part refID="1" designID="3001" materials="24">
+        <Bone refID="2" transformation="1,0,0,0,1,0,0,0,1,1.2000000476837158203125,0,1.2000000476837158203125">
+        </Bone>
+      </Part>
+    </Brick>
+    <Brick refID="2" designID="3001" itemNos="300124">
+      <Part refID="2" designID="3001" materials="24">
+        <Bone refID="3" transformation="1,0,0,0,1,0,0,0,1,2.80000019073486328125,0,-2">
         </Bone>
       </Part>
     </Brick>
   </Bricks>
   <RigidSystems>
     <RigidSystem>
-      <Rigid refID="1" transformation="1,0,0,0,1,0,0,0,1,-2.7999999523162841796875,0,-0.4000000059604644775390625" boneRefs="1"/>
+      <Rigid refID="1" transformation="1,0,0,0,1,0,0,0,1,0.4000000059604644775390625,0,-0.4000000059604644775390625" boneRefs="1"/>
+    </RigidSystem>
+    <RigidSystem>
+      <Rigid refID="2" transformation="1,0,0,0,1,0,0,0,1,1.2000000476837158203125,0,1.2000000476837158203125" boneRefs="2"/>
+    </RigidSystem>
+    <RigidSystem>
+      <Rigid refID="3" transformation="1,0,0,0,1,0,0,0,1,2.80000019073486328125,0,-2" boneRefs="3"/>
     </RigidSystem>
   </RigidSystems>
   <GroupSystems>
