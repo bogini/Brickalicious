@@ -2,6 +2,7 @@ import os
 import sys
 import re
 import unicodedata
+import operator
 
 from xml.dom.minidom import parseString
 
@@ -110,7 +111,8 @@ def parsing(infilename):
                     
         # Add the brick to the list
         bricks.append(Brick(x, y, z, orientation, designID))
-	return bricks              
+    
+    return bricks              
 
 def generate_pin_dict(bricks):
     pin_dict = {}
@@ -118,9 +120,9 @@ def generate_pin_dict(bricks):
         for pin_covered in brick.covers:
             pin_dict[(pin_covered.x, pin_covered.y, pin_covered.z)] = 1
     return pin_dict
-	
+    
 def adjacency(bricks, pin_dict):
-	# Adjacency
+    # Adjacency
     for brick in bricks:
         # Top
         for i in range(4):
@@ -141,32 +143,50 @@ def adjacency(bricks, pin_dict):
         # Left
         for i in range(2):
             if brick.orientation == 'N':
-				left = pin_dict.get((brick.pin.x - 1, brick.pin.y - i, brick.pin.z), 0)
+                left = pin_dict.get((brick.pin.x - 1, brick.pin.y - i, brick.pin.z), 0)
             elif brick.orientation == 'E':
-				left = pin_dict.get((brick.pin.x + i, brick.pin.y + 1, brick.pin.z), 0)
+                left = pin_dict.get((brick.pin.x + i, brick.pin.y + 1, brick.pin.z), 0)
             if left == 1:
-				break 
-		# Right
+                break 
+        # Right
         for i in range(2):
-			if brick.orientation == 'N':
-				right = pin_dict.get((brick.pin.x + 4, brick.pin.y - i, brick.pin.z), 0)
-			elif brick.orientation == 'E':
-				right = pin_dict.get((brick.pin.x + i, brick.pin.y - 4, brick.pin.z), 0)
-			if right == 1:
-				break
+            if brick.orientation == 'N':
+                right = pin_dict.get((brick.pin.x + 4, brick.pin.y - i, brick.pin.z), 0)
+            elif brick.orientation == 'E':
+                right = pin_dict.get((brick.pin.x + i, brick.pin.y - 4, brick.pin.z), 0)
+            if right == 1:
+                break
                 
         brick.adjacency = top * bottom + left * right
-	
+
+def generate_build_order(bricks):
+    build = {}
+    
+    for brick in bricks:
+        if build.get(brick.pin.z, None) == None:
+            build[brick.pin.z] = [brick]
+        else:
+            build[brick.pin.z].append(brick)
+    
+    # Order the list by adjacency index
+    for z in build.keys():
+        build[z].sort(key=operator.attrgetter('adjacency'))
+        
+    return build
+
 def main():
     infilename = "Lego_test.LXFML"
     
     bricks = parsing(infilename)
     pin_dict = generate_pin_dict(bricks)
     adjacency(bricks, pin_dict)
-
+    build_order = generate_build_order(bricks)
     
-    #test
-    print len(pin_dict)
+    for z in build_order.keys():
+        print str(z) + ':'
+        for brick in build_order[z]:
+            print brick
+    
     for brick in bricks:
         print brick
         for pin in brick.covers:
