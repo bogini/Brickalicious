@@ -49,10 +49,8 @@ class Brick:
             for i in range(2):
                 for j in range(4):
                     self.covers.append(Pin(int(self.pin.x) + i, int(self.pin.y) + j - 1, int(self.pin.z)))
-            
-def main():
-    infilename = "Lego_test.LXFML"
 
+def parsing(infilename):
     lines = []
     if infilename != "" and os.path.isfile(infilename):
         infile = open(infilename)
@@ -112,48 +110,63 @@ def main():
                     
         # Add the brick to the list
         bricks.append(Brick(x, y, z, orientation, designID))
-        
-        # Adjacency
-        pin_dict = {}
-        for brick in bricks:
-            for pin_covered in brick.covers:
-                pin_dict[(pin_covered.x, pin_covered.y, pin_covered.z)] = 1
-        for brick in bricks:
-            # Top
-            for i in range(4):
-                if brick.orientation == 'N':
-                    top = pin_dict.get((brick.pin.x + i, brick.pin.y + 1, brick.pin.z), 0)
-                elif brick.orientation == 'E':
-                    top = pin_dict.get((brick.pin.x + 2, brick.pin.y - i, brick.pin.z), 0)
-                if top == 1:
-                    break
-            # Bottom
-            for i in range(4):
-                if brick.orientation == 'N':
-                    bottom = pin_dict.get((brick.pin.x + i, brick.pin.y - 2, brick.pin.z), 0)
-                elif brick.orientation == 'E':
-                    bottom = pin_dict.get((brick.pin.x - 1, brick.pin.y - i, brick.pin.z), 0)
-                if bottom == 1:
-                    break
-            # Left
-            for i in range(2):
-                if brick.orientation == 'N':
-                    left = pin_dict.get((brick.pin.x - 1, brick.pin.y - i, brick.pin.z), 0)
-                elif brick.orientation == 'E':
-                    left = pin_dict.get((brick.pin.x + i, brick.pin.y + 1, brick.pin.z), 0)
-                if left == 1:
-                    break 
-            # Right
-            for i in range(2):
-                if brick.orientation == 'N':
-                    right = pin_dict.get((brick.pin.x + 4, brick.pin.y - i, brick.pin.z), 0)
-                elif brick.orientation == 'E':
-                    right = pin_dict.get((brick.pin.x + i, brick.pin.y - 4, brick.pin.z), 0)
-                if right == 1:
-                    break
-            brick.adjacency = top * bottom + left * right
-    print pin_dict
+	return bricks              
+
+def generate_pin_dict(bricks):
+    pin_dict = {}
+    for brick in bricks:
+        for pin_covered in brick.covers:
+            pin_dict[(pin_covered.x, pin_covered.y, pin_covered.z)] = 1
+    return pin_dict
+	
+def adjacency(bricks, pin_dict):
+	# Adjacency
+    for brick in bricks:
+        # Top
+        for i in range(4):
+            if brick.orientation == 'N':
+                top = pin_dict.get((brick.pin.x + i, brick.pin.y + 1, brick.pin.z), 0)
+            elif brick.orientation == 'E':
+                top = pin_dict.get((brick.pin.x + 2, brick.pin.y - i, brick.pin.z), 0)
+            if top == 1:
+                break 
+     # Bottom
+        for i in range(4):
+            if brick.orientation == 'N':
+                bottom = pin_dict.get((brick.pin.x + i, brick.pin.y - 2, brick.pin.z), 0)
+            elif brick.orientation == 'E':
+                bottom = pin_dict.get((brick.pin.x - 1, brick.pin.y - i, brick.pin.z), 0)
+            if bottom == 1:
+                break
+        # Left
+        for i in range(2):
+            if brick.orientation == 'N':
+				left = pin_dict.get((brick.pin.x - 1, brick.pin.y - i, brick.pin.z), 0)
+            elif brick.orientation == 'E':
+				left = pin_dict.get((brick.pin.x + i, brick.pin.y + 1, brick.pin.z), 0)
+            if left == 1:
+				break 
+		# Right
+        for i in range(2):
+			if brick.orientation == 'N':
+				right = pin_dict.get((brick.pin.x + 4, brick.pin.y - i, brick.pin.z), 0)
+			elif brick.orientation == 'E':
+				right = pin_dict.get((brick.pin.x + i, brick.pin.y - 4, brick.pin.z), 0)
+			if right == 1:
+				break
+                
+        brick.adjacency = top * bottom + left * right
+	
+def main():
+    infilename = "Lego_test.LXFML"
+    
+    bricks = parsing(infilename)
+    pin_dict = generate_pin_dict(bricks)
+    adjacency(bricks, pin_dict)
+
+    
     #test
+    print len(pin_dict)
     for brick in bricks:
         print brick
         for pin in brick.covers:
