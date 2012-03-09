@@ -44,11 +44,11 @@ class Brick:
         if self.orientation == 'N':
             for i in range(4):
                 for j in range(2):
-                    self.covers.append(Pin(self.pin.x + i, int(self.pin.y) - j, self.pin.z))
+                    self.covers.append(Pin(int(self.pin.x) + i, int(self.pin.y) - j, int(self.pin.z)))
         elif self.orientation == 'E':
             for i in range(2):
                 for j in range(4):
-                    self.covers.append(Pin(self.pin.x + i, self.pin.y + j - 1, self.pin.z))
+                    self.covers.append(Pin(int(self.pin.x) + i, int(self.pin.y) + j - 1, int(self.pin.z)))
             
 def main():
     infilename = "Lego_test.LXFML"
@@ -122,42 +122,42 @@ def main():
             # Top
             for i in range(4):
                 if brick.orientation == 'N':
-                    top = pin_dict.get((pin_covered.x + i, pin_covered.y + 1, pin_covered.z), 0)
+                    top = pin_dict.get((brick.pin.x + i, brick.pin.y + 1, brick.pin.z), 0)
                 elif brick.orientation == 'E':
-                    top = pin_dict.get((pin_covered.x + 2, pin_covered.y - i, pin_covered.z), 0)
+                    top = pin_dict.get((brick.pin.x + 2, brick.pin.y - i, brick.pin.z), 0)
                 if top == 1:
                     break
             # Bottom
             for i in range(4):
                 if brick.orientation == 'N':
-                    bottom = pin_dict.get((pin_covered.x + i, pin_covered.y - 2, pin_covered.z), 0)
+                    bottom = pin_dict.get((brick.pin.x + i, brick.pin.y - 2, brick.pin.z), 0)
                 elif brick.orientation == 'E':
-                    bottom = pin_dict.get((pin_covered.x - 1, pin_covered.y - i, pin_covered.z), 0)
+                    bottom = pin_dict.get((brick.pin.x - 1, brick.pin.y - i, brick.pin.z), 0)
                 if bottom == 1:
                     break
             # Left
             for i in range(2):
                 if brick.orientation == 'N':
-                    left = pin_dict.get((pin_covered.x - 1, pin_covered.y - i, pin_covered.z), 0)
+                    left = pin_dict.get((brick.pin.x - 1, brick.pin.y - i, brick.pin.z), 0)
                 elif brick.orientation == 'E':
-                    left = pin_dict.get((pin_covered.x + i, pin_covered.y + 1, pin_covered.z), 0)
+                    left = pin_dict.get((brick.pin.x + i, brick.pin.y + 1, brick.pin.z), 0)
                 if left == 1:
                     break 
             # Right
             for i in range(2):
                 if brick.orientation == 'N':
-                    right = pin_dict.get((pin_covered.x + 4, pin_covered.y - i, pin_covered.z), 0)
+                    right = pin_dict.get((brick.pin.x + 4, brick.pin.y - i, brick.pin.z), 0)
                 elif brick.orientation == 'E':
-                    right = pin_dict.get((pin_covered.x + i, pin_covered.y - 4, pin_covered.z), 0)
+                    right = pin_dict.get((brick.pin.x + i, brick.pin.y - 4, brick.pin.z), 0)
                 if right == 1:
                     break
             brick.adjacency = top * bottom + left * right
-        
-        #test
-        for brick in bricks:
-            print brick
-            for pin in brick.covers:
-                print pin
+    print pin_dict
+    #test
+    for brick in bricks:
+        print brick
+        for pin in brick.covers:
+            print pin
         
 if __name__ == "__main__":
     main()
