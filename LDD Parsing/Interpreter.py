@@ -132,7 +132,7 @@ def adjacency(bricks, pin_dict):
                 top = pin_dict.get((brick.pin.x + 2, brick.pin.y - i, brick.pin.z), 0)
             if top == 1:
                 break 
-     # Bottom
+        # Bottom
         for i in range(4):
             if brick.orientation == 'N':
                 bottom = pin_dict.get((brick.pin.x + i, brick.pin.y - 2, brick.pin.z), 0)
@@ -179,6 +179,7 @@ def main():
     
     bricks = parsing(infilename)
     pin_dict = generate_pin_dict(bricks)
+    print pin_dict
     adjacency(bricks, pin_dict)
     build_order = generate_build_order(bricks)
     
