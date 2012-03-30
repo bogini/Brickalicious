@@ -120,7 +120,19 @@ def generate_pin_dict(bricks):
         for pin_covered in brick.covers:
             pin_dict[(pin_covered.x, pin_covered.y, pin_covered.z)] = 1
     return pin_dict
-    
+  
+def translation(bricks):
+	low_x = bricks[0].x
+	low_y = bricks[0].y
+	for brick in bricks:
+		if brick.x < low_x:
+			low_x = brick.x
+		if brick.y < low_y:
+			low_y = brick.y
+	for brick in bricks:
+		brick.x -= low_x
+		brick.y -= low_y
+	
 def adjacency(bricks, pin_dict):
     # Adjacency
     for brick in bricks:
@@ -175,9 +187,10 @@ def generate_build_order(bricks):
     return build
 
 def main():
-    infilename = "Lego_test.LXFML"
+    infilename = "Lego1.LXFML"
     
     bricks = parsing(infilename)
+	translation(bricks)
     pin_dict = generate_pin_dict(bricks)
     print pin_dict
     adjacency(bricks, pin_dict)
