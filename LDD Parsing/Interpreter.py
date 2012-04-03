@@ -94,7 +94,7 @@ def parsing(infilename):
             if orientation == [-1,0,0,0,1,0,0,0,-1]:
                 position[2] -= 2.4  # x
                 position[0] += 0.8  # y
-                orientation = ''
+                orientation = 'N'
             elif orientation == [1,0,0,0,1,0,0,0,1]:
                 orientation = 'N'
             elif orientation == [0,0,-1,0,1,0,1,0,0]:
@@ -117,11 +117,27 @@ def parsing(infilename):
 def generate_pin_dict(bricks):
     pin_dict = {}
     for brick in bricks:
+        brick.covering()
         for pin_covered in brick.covers:
             pin_dict[(pin_covered.x, pin_covered.y, pin_covered.z)] = 1
     return pin_dict
   
 def translation(bricks):
+<<<<<<< HEAD
+    low_x = bricks[0].pin.x
+    low_y = bricks[0].pin.y
+    for brick in bricks:
+        if brick.pin.x < low_x:
+            low_x = brick.pin.x
+        if brick.pin.y < low_y:
+            low_y = brick.pin.y
+    for brick in bricks:
+        brick.pin.x -= low_x
+        brick.pin.y -= low_y
+        # adding 1 because of the way the LDD origin pin works
+        brick.pin.y += 1
+    
+=======
 	low_x = bricks[0].x
 	low_y = bricks[0].y
 	for brick in bricks:
@@ -133,6 +149,7 @@ def translation(bricks):
 		brick.x -= low_x
 		brick.y -= low_y
 	
+>>>>>>> upstream/master
 def adjacency(bricks, pin_dict):
     # Adjacency
     for brick in bricks:
@@ -190,7 +207,11 @@ def main():
     infilename = "Lego1.LXFML"
     
     bricks = parsing(infilename)
+<<<<<<< HEAD
+    translation(bricks)
+=======
 	translation(bricks)
+>>>>>>> upstream/master
     pin_dict = generate_pin_dict(bricks)
     print pin_dict
     adjacency(bricks, pin_dict)
