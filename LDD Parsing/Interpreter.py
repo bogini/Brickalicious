@@ -5,6 +5,7 @@ import unicodedata
 import operator
 
 from xml.dom.minidom import parseString
+from operator import attrgetter
 
 class Pin:
     def __init__(self, x, y, z):
@@ -123,7 +124,6 @@ def generate_pin_dict(bricks):
     return pin_dict
   
 def translation(bricks):
-<<<<<<< HEAD
     low_x = bricks[0].pin.x
     low_y = bricks[0].pin.y
     for brick in bricks:
@@ -136,96 +136,73 @@ def translation(bricks):
         brick.pin.y -= low_y
         # adding 1 because of the way the LDD origin pin works
         brick.pin.y += 1
-    
-=======
-	low_x = bricks[0].x
-	low_y = bricks[0].y
-	for brick in bricks:
-		if brick.x < low_x:
-			low_x = brick.x
-		if brick.y < low_y:
-			low_y = brick.y
-	for brick in bricks:
-		brick.x -= low_x
-		brick.y -= low_y
-	
->>>>>>> upstream/master
+        brick.covering()
+
 def adjacency(bricks, pin_dict):
     # Adjacency
     for brick in bricks:
-        # Top
-        for i in range(4):
-            if brick.orientation == 'N':
-                top = pin_dict.get((brick.pin.x + i, brick.pin.y + 1, brick.pin.z), 0)
-            elif brick.orientation == 'E':
-                top = pin_dict.get((brick.pin.x + 2, brick.pin.y - i, brick.pin.z), 0)
-            if top == 1:
-                break 
-        # Bottom
-        for i in range(4):
-            if brick.orientation == 'N':
-                bottom = pin_dict.get((brick.pin.x + i, brick.pin.y - 2, brick.pin.z), 0)
-            elif brick.orientation == 'E':
-                bottom = pin_dict.get((brick.pin.x - 1, brick.pin.y - i, brick.pin.z), 0)
-            if bottom == 1:
-                break
-        # Left
-        for i in range(2):
-            if brick.orientation == 'N':
-                left = pin_dict.get((brick.pin.x - 1, brick.pin.y - i, brick.pin.z), 0)
-            elif brick.orientation == 'E':
-                left = pin_dict.get((brick.pin.x + i, brick.pin.y + 1, brick.pin.z), 0)
-            if left == 1:
-                break 
-        # Right
-        for i in range(2):
-            if brick.orientation == 'N':
-                right = pin_dict.get((brick.pin.x + 4, brick.pin.y - i, brick.pin.z), 0)
-            elif brick.orientation == 'E':
-                right = pin_dict.get((brick.pin.x + i, brick.pin.y - 4, brick.pin.z), 0)
-            if right == 1:
-                break
-                
-        brick.adjacency = top * bottom + left * right
+            # Top
+            for i in range(4):
+                if brick.orientation == 'N':
+                    top = pin_dict.get((brick.pin.x + i, brick.pin.y + 1, brick.pin.z), 0)
+                elif brick.orientation == 'E':
+                    top = pin_dict.get((brick.pin.x + 2, brick.pin.y - i, brick.pin.z), 0)
+                if top == 1:
+                    break 
+            # Bottom
+            for i in range(4):
+                if brick.orientation == 'N':
+                    bottom = pin_dict.get((brick.pin.x + i, brick.pin.y - 2, brick.pin.z), 0)
+                elif brick.orientation == 'E':
+                    bottom = pin_dict.get((brick.pin.x - 1, brick.pin.y - i, brick.pin.z), 0)
+                if bottom == 1:
+                    break
+            # Left
+            for i in range(2):
+                if brick.orientation == 'N':
+                    left = pin_dict.get((brick.pin.x - 1, brick.pin.y - i, brick.pin.z), 0)
+                elif brick.orientation == 'E':
+                    left = pin_dict.get((brick.pin.x + i, brick.pin.y + 1, brick.pin.z), 0)
+                if left == 1:
+                    break 
+            # Right
+            for i in range(2):
+                if brick.orientation == 'N':
+                    right = pin_dict.get((brick.pin.x + 4, brick.pin.y - i, brick.pin.z), 0)
+                elif brick.orientation == 'E':
+                    right = pin_dict.get((brick.pin.x + i, brick.pin.y - 4, brick.pin.z), 0)
+                if right == 1:
+                    break
+                    
+            brick.adjacency = top * bottom + left * right
 
 def generate_build_order(bricks):
-    build = {}
-    
-    for brick in bricks:
-        if build.get(brick.pin.z, None) == None:
-            build[brick.pin.z] = [brick]
-        else:
-            build[brick.pin.z].append(brick)
-    
-    # Order the list by adjacency index
-    for z in build.keys():
-        build[z].sort(key=operator.attrgetter('adjacency'))
-        
-    return build
+    # New adjacency algorithm sort by x and y
+    bricks_ordered = sorted(bricks, key=attrgetter('pin.x', 'pin.y'))
+    # print 'order:', bricks_ordered.__str__()
+    #     for brick in bricks_ordered:
+    #         print brick
+    #         for pin in brick.covers:
+    #             print pin
+    return bricks_ordered
 
 def main():
-    infilename = "Lego1.LXFML"
+    infilename = "Lego_test.LXFML"
     
     bricks = parsing(infilename)
-<<<<<<< HEAD
     translation(bricks)
-=======
-	translation(bricks)
->>>>>>> upstream/master
-    pin_dict = generate_pin_dict(bricks)
-    print pin_dict
-    adjacency(bricks, pin_dict)
+    #pin_dict = generate_pin_dict(bricks)
+    #print pin_dict
+    #adjacency(bricks, pin_dict)
     build_order = generate_build_order(bricks)
     
-    for z in build_order.keys():
-        print str(z) + ':'
-        for brick in build_order[z]:
-            print brick
-    
-    for brick in bricks:
+    for brick in build_order:
         print brick
-        for pin in brick.covers:
-            print pin
+    
+    # for brick in bricks:
+    #         print brick
+    #         for pin in brick.covers:
+    #             print pin
         
 if __name__ == "__main__":
     main()
