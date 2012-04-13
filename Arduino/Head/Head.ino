@@ -10,28 +10,31 @@ int pos2 = 0;
  
 void setup() 
 { 
-  headRotation.attach(8);  
-  headCam.attach(7);
+  headRotation.attach(9);  
+  headCam.attach(8);
+  Serial.begin(9600);
 } 
  
  
 void loop() 
 {
-  horizontal();
-  pushDown();
-  delay(3000);
-  vertical();
-  goUp();
-  delay(3000);
+  //horizontal();
+  //pushDown();
+  headCam.write(0);
+  delay(1000);
+  headCam.write(10);
+  //vertical();
+  //goUp();
+  delay(1000);
 }
 
 void horizontal() {
-  pos = 28;
+  pos = 38;
   headRotation.write(pos);   // 28 = 0º
 }
 
 void vertical() {
-  pos = 115;
+  pos = 138;
   headRotation.write(pos);   // 28 = 0º
 }
 
