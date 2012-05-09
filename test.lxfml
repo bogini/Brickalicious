@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<LXFML versionMajor="5" versionMinor="0" name="test">
+  <Meta>
+    <Application name="LEGO Digital Designer" versionMajor="4" versionMinor="2"/>
+    <Brand name="LDD"/>
+    <BrickSet version="604.1"/>
+  </Meta>
+  <Cameras>
+    <Camera refID="1" fieldOfView="80" distance="112.49871826171875" transformation="0.13779036700725555419921875,0,-0.990461409091949462890625,-0.883207976818084716796875,0.452600061893463134765625,-0.122869558632373809814453125,0.4482827484607696533203125,0.891713619232177734375,0.06236390769481658935546875,50.431243896484375,100.31662750244140625,7.015857219696044921875"/>
+  </Cameras>
+  <Bricks cameraRef="1">
+    <Brick refID="0" designID="3001" itemNos="300124">
+      <Part refID="0" designID="3001" materials="24">
+        <Bone refID="1" transformation="0,0,0.9999997615814208984375,0,0.999999940395355224609375,0,-1,0,0,2,0,5.200000286102294921875">
+        </Bone>
+      </Part>
+    </Brick>
+    <Brick refID="1" designID="3001" itemNos="300124">
+      <Part refID="1" designID="3001" materials="24">
+        <Bone refID="2" transformation="-1,0,0,0,0.999999940395355224609375,0,0,0,-0.9999997615814208984375,5.200000762939453125,0.959999978542327880859375,6.00000095367431640625">
+        </Bone>
+      </Part>
+    </Brick>
+    <Brick refID="2" designID="3001" itemNos="300124">
+      <Part refID="2" designID="3001" materials="24">
+        <Bone refID="3" transformation="0,0,-0.9999997615814208984375,0,0.999999940395355224609375,0,1,0,0,4.3999996185302734375,0,7.60000133514404296875">
+        </Bone>
+      </Part>
+    </Brick>
+    <Brick refID="3" designID="3001" itemNos="300124">
+      <Part refID="3" designID="3001" materials="24">
+        <Bone refID="4" transformation="0,0,-0.9999997615814208984375,0,0.999999940395355224609375,0,1,0,0,6.00000095367431640625,0,7.6000003814697265625">
+        </Bone>
+      </Part>
+    </Brick>
+  </Bricks>
+  <RigidSystems>
+    <RigidSystem>
+      <Rigid refID="1" transformation="0,0,0.9999997615814208984375,0,0.999999940395355224609375,0,-1,0,0,2,0,5.200000286102294921875" boneRefs="1,2,3,4"/>
+    </RigidSystem>
+  </RigidSystems>
+  <GroupSystems>
+    <GroupSystem>
+    </GroupSystem>
+  </GroupSystems>
+  <BuildingInstructions>
+  </BuildingInstructions>
+</LXFML>
